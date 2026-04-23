@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Copa do Mundo 2026</title>
+
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: Arial;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: #0077b6;
+            text-align: center;
+            padding: 15px;
+        }
+
+        nav a {
+            color: white;
+            margin: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .secao {
+            background-color: #e3f2fd;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .secao h2 {
+            font-size: 26px;
+            font-weight: bold;
+            color: #023e8a;
+            text-align: center;
+        }
+
+        .secao p {
+            font-size: 16px;
+            color: #333;
+            text-align: justify;
+        }
+
+        .botao {
+            text-align: center;
+            margin: 30px;
+        }
+
+        button {
+            background-color: #0096c7;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0077b6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="#org">Organização</a>
+        <a href="#form">Formato</a>
+        <a href="#imp">Impacto</a>
+    </nav>
+
+    <section id="org" class="secao">
+        <h2>🌍 Organização e Sedes</h2>
+        <p>
+            A Copa do Mundo FIFA de 2026 será realizada em três países: Estados Unidos, Canadá e México.
+        </p>
+    </section>
+
+    <section id="form" class="secao">
+        <h2>⚽ Novo Formato</h2>
+        <p>
+            O torneio contará com 48 seleções, aumentando o número de jogos e participação global.
+        </p>
+    </section>
+
+    <section id="imp" class="secao">
+        <h2>🏆 Impacto</h2>
+        <p>
+            Será uma das Copas mais assistidas da história, com grande impacto econômico e cultural.
+        </p>
+    </section>
+
+    <div class="botao">
+        <button onclick="mostrarImagem()">Mostrar Tabela de Jogos</button>
+    </div>
+
+    <script>
+    function mostrarImagem() {
+        // Cria container
+        var container = document.createElement("div");
+
+        // Título de revelação (opcional)
+        var titulo = document.createElement("h3");
+        titulo.innerText = "🏆 Jogadores e Jogos da Copa 2026";
+        titulo.style.textAlign = "center";
+        titulo.style.color = "#023e8a";
+
+        // Imagem
+        var img = document.createElement("img");
+        img.src = "Tabela_Jogos.png"; // ajuste o caminho se necessário
+        img.style.display = "block";
+        img.style.margin = "20px auto";
+        img.style.maxWidth = "80%";
+        img.style.borderRadius = "10px";
+
+        // Monta estrutura
+        container.appendChild(titulo);
+        container.appendChild(img);
+
+        // Adiciona no final da página
+        document.body.appendChild(container);
+    }
+</script>
+
+</body>
+</html>
