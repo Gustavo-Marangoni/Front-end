@@ -1,0 +1,335 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Exercícios JavaScript</title>
+
+  <style>
+    body{
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+
+    section{
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+    }
+
+    h2{
+      margin-top: 0;
+    }
+
+    input, select, button{
+      padding: 8px;
+      margin: 5px 0;
+      width: 250px;
+    }
+
+    button{
+      cursor: pointer;
+    }
+
+    .resultado{
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .verde{
+      color: green;
+    }
+
+    .vermelho{
+      color: red;
+    }
+
+    .azul{
+      color: blue;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- EXERCÍCIO 01 -->
+  <section>
+    <h2>Exercício 01 - Validador de CPF</h2>
+
+    <input type="text" id="cpf" placeholder="Digite o CPF">
+    <br>
+    <button id="btnCpf">Validar</button>
+
+    <div id="resultadoCpf" class="resultado"></div>
+  </section>
+
+
+  <!-- EXERCÍCIO 02 -->
+  <section>
+    <h2>Exercício 02 - Conversor de Temperatura</h2>
+
+    <label>Celsius:</label>
+    <br>
+    <input type="number" id="celsius" step="0.1">
+
+    <br><br>
+
+    <label>Fahrenheit:</label>
+    <br>
+    <input type="number" id="fahrenheit" step="0.1">
+  </section>
+
+
+  <!-- EXERCÍCIO 03 -->
+  <section>
+    <h2>Exercício 03 - Média Escolar</h2>
+
+    <input type="text" id="nome" placeholder="Nome do aluno">
+    <br>
+
+    <input type="number" id="nota1" placeholder="Nota 1">
+    <br>
+
+    <input type="number" id="nota2" placeholder="Nota 2">
+    <br>
+
+    <input type="number" id="nota3" placeholder="Nota 3">
+    <br>
+
+    <button id="btnMedia">Calcular Média</button>
+
+    <div id="resultadoMedia" class="resultado"></div>
+  </section>
+
+
+  <!-- EXERCÍCIO 04 -->
+  <section>
+    <h2>Exercício 04 - Taxas Infinity Bank</h2>
+
+    <label>Bandeira:</label>
+    <br>
+
+    <select id="bandeira">
+      <option value="visa">Visa</option>
+      <option value="master">Master</option>
+      <option value="elo">Elo</option>
+    </select>
+
+    <br>
+
+    <input type="number" id="valorVenda" placeholder="Valor da venda">
+
+    <br>
+
+    <input type="number" id="parcelas" placeholder="Quantidade de parcelas">
+
+    <br>
+
+    <button id="btnTaxa">Calcular</button>
+
+    <div id="resultadoTaxa" class="resultado"></div>
+  </section>
+
+
+  <script>
+
+    // =========================================
+    // EXERCÍCIO 01 - VALIDAR CPF
+    // =========================================
+
+    function validarCPF(cpf){
+
+      cpf = cpf.replace(/\D/g, '');
+
+      if(cpf.length !== 11){
+        return false;
+      }
+
+      if(/^(\d)\1+$/.test(cpf)){
+        return false;
+      }
+
+      // PRIMEIRO DÍGITO
+      let soma = 0;
+
+      for(let i = 0; i < 9; i++){
+        soma += Number(cpf[i]) * (10 - i);
+      }
+
+      let digito1 = (soma * 10) % 11;
+
+      if(digito1 === 10){
+        digito1 = 0;
+      }
+
+      // SEGUNDO DÍGITO
+      soma = 0;
+
+      for(let i = 0; i < 10; i++){
+        soma += Number(cpf[i]) * (11 - i);
+      }
+
+      let digito2 = (soma * 10) % 11;
+
+      if(digito2 === 10){
+        digito2 = 0;
+      }
+
+      return digito1 == cpf[9] && digito2 == cpf[10];
+    }
+
+    document.getElementById('btnCpf').addEventListener('click', () => {
+
+      const cpf = document.getElementById('cpf').value;
+
+      const resultado = document.getElementById('resultadoCpf');
+
+      if(validarCPF(cpf)){
+        resultado.innerHTML = 'CPF Válido';
+        resultado.className = 'resultado verde';
+      } else {
+        resultado.innerHTML = 'CPF Inválido';
+        resultado.className = 'resultado vermelho';
+      }
+
+    });
+
+
+    // =========================================
+    // EXERCÍCIO 02 - CONVERSOR TEMPERATURA
+    // =========================================
+
+    const celsius = document.getElementById('celsius');
+    const fahrenheit = document.getElementById('fahrenheit');
+
+    celsius.addEventListener('input', () => {
+
+      let c = Number(celsius.value);
+
+      let f = (c * 9/5) + 32;
+
+      fahrenheit.value = f.toFixed(2);
+
+    });
+
+    fahrenheit.addEventListener('input', () => {
+
+      let f = Number(fahrenheit.value);
+
+      let c = (f - 32) * 5/9;
+
+      celsius.value = c.toFixed(2);
+
+    });
+
+
+    // =========================================
+    // EXERCÍCIO 03 - MÉDIA ESCOLAR
+    // =========================================
+
+    document.getElementById('btnMedia').addEventListener('click', () => {
+
+      const nome = document.getElementById('nome').value;
+
+      const nota1 = Number(document.getElementById('nota1').value);
+      const nota2 = Number(document.getElementById('nota2').value);
+      const nota3 = Number(document.getElementById('nota3').value);
+
+      const media = (nota1 + nota2 + nota3) / 3;
+
+      const resultado = document.getElementById('resultadoMedia');
+
+      if(media >= 7){
+
+        resultado.innerHTML = `
+          Aluno: ${nome} <br>
+          Média: ${media.toFixed(2)} <br>
+          Situação: APROVADO
+        `;
+
+        resultado.className = 'resultado azul';
+
+      } else if(media >= 4){
+
+        let falta = (10 - media).toFixed(2);
+
+        resultado.innerHTML = `
+          Aluno: ${nome} <br>
+          Média: ${media.toFixed(2)} <br>
+          Situação: EXAME <br>
+          Faltam ${falta} pontos para chegar em 10
+        `;
+
+        resultado.className = 'resultado verde';
+
+      } else {
+
+        resultado.innerHTML = `
+          Aluno: ${nome} <br>
+          Média: ${media.toFixed(2)} <br>
+          Situação: REPROVADO
+        `;
+
+        resultado.className = 'resultado vermelho';
+      }
+
+    });
+
+
+    // =========================================
+    // EXERCÍCIO 04 - INFINITY BANK
+    // =========================================
+
+    document.getElementById('btnTaxa').addEventListener('click', () => {
+
+      const bandeira = document.getElementById('bandeira').value;
+
+      const valorVenda = Number(document.getElementById('valorVenda').value);
+
+      const parcelas = Number(document.getElementById('parcelas').value);
+
+      let taxaBandeira = 0;
+
+      switch(bandeira){
+
+        case 'visa':
+          taxaBandeira = valorVenda * 0.02;
+          break;
+
+        case 'master':
+          taxaBandeira = valorVenda * 0.0185;
+          break;
+
+        case 'elo':
+          taxaBandeira = valorVenda * 0.03;
+          break;
+      }
+
+      // juros simples
+      const juros = valorVenda * (0.0035 * parcelas);
+
+      // taxa fixa mensal
+      const taxaMensal = 12.50 * parcelas;
+
+      const valorTotal = valorVenda + taxaBandeira + juros + taxaMensal;
+
+      const valorParcela = valorTotal / parcelas;
+
+      document.getElementById('resultadoTaxa').innerHTML = `
+        Taxa da Bandeira: R$ ${taxaBandeira.toFixed(2)} <br>
+        Juros: R$ ${juros.toFixed(2)} <br>
+        Taxa Mensal: R$ ${taxaMensal.toFixed(2)} <br>
+        Valor Total: R$ ${valorTotal.toFixed(2)} <br>
+        Valor por Parcela: R$ ${valorParcela.toFixed(2)}
+      `;
+
+    });
+
+  </script>
+
+</body>
+</html>
+```
