@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Exercícios JavaScript</title>
+
+  <style>
+
+    body{
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 20px;
+      background: #f4f4f4;
+    }
+
+    section{
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    h2{
+      margin-top: 0;
+      color: #0d6efd;
+    }
+
+    input, select, button{
+      padding: 8px;
+      margin: 5px 0;
+      width: 250px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button{
+      cursor: pointer;
+      background: #0d6efd;
+      color: white;
+      border: none;
+      transition: 0.3s;
+    }
+
+    button:hover{
+      background: #0b5ed7;
+    }
+
+    .resultado{
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .verde{
+      color: green;
+    }
+
+    .vermelho{
+      color: red;
+    }
+
+    .azul{
+      color: blue;
+    }
+
+    .card-vip{
+      max-width: 500px;
+      margin: auto;
+    }
+
+    #listaConvidados{
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    #listaConvidados li{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .riscado{
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    .acoes button{
+      width: auto;
+      margin-left: 5px;
+      padding: 5px 10px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- EXERCÍCIO 01 -->
+  <section>
+    <h2>Exercício 01 - Validador de CPF</h2>
+
+    <input type="text" id="cpf" placeholder="Digite o CPF">
+    <br>
+    <button id="btnCpf">Validar</button>
+
+    <div id="resultadoCpf" class="resultado"></div>
+  </section>
+
+
+  <!-- EXERCÍCIO 02 -->
+  <section>
+    <h2>Exercício 02 - Conversor de Temperatura</h2>
+
+    <label>Celsius:</label>
+    <br>
+    <input type="number" id="celsius" step="0.1">
+
+    <br><br>
+
+    <label>Fahrenheit:</label>
+    <br>
+    <input type="number" id="fahrenheit" step="0.1">
+  </section>
+
+
+  <!-- EXERCÍCIO 03 -->
+  <section>
+    <h2>Exercício 03 - Média Escolar</h2>
+
+    <input type="text" id="nome" placeholder="Nome do aluno">
+    <br>
+
+    <input type="number" id="nota1" placeholder="Nota 1">
+    <br>
+
+    <input type="number" id="nota2" placeholder="Nota 2">
+    <br>
+
+    <input type="number" id="nota3" placeholder="Nota 3">
+    <br>
+
+    <button id="btnMedia">Calcular Média</button>
+
+    <div id="resultadoMedia" class="resultado"></div>
+  </section>
+
+
+  <!-- EXERCÍCIO 04 -->
+  <section>
+    <h2>Exercício 04 - Taxas Infinity Bank</h2>
+
+    <label>Bandeira:</label>
+    <br>
+
+    <select id="bandeira">
+      <option value="visa">Visa</option>
+      <option value="master">Master</option>
+      <option value="elo">Elo</option>
+    </select>
+
+    <br>
+
+    <input type="number" id="valorVenda" placeholder="Valor da venda">
+
+    <br>
+
+    <input type="number" id="parcelas" placeholder="Quantidade de parcelas">
+
+    <br>
+
+    <button id="btnTaxa">Calcular</button>
+
+    <div id="resultadoTaxa" class="resultado"></div>
+  </section>
+
+
+  <!-- EXERCÍCIO 05 -->
+  <section>
+    <h2>Exercício 05 - Lista de Convidados VIP</h2>
+
+    <div class="card-vip">
+
+      <input type="text" id="nomeConvidado" placeholder="Nome do convidado">
+
+      <br>
+
+      <button id="btnAdicionarConvidado">Adicionar Convidado</button>
+
+      <ul id="listaConvidados"></ul>
+
+    </div>
+  </section>
+
+
+  <!-- EXERCÍCIO 06 -->
+  <section>
+    <h2>Exercício 06 - Crédito para Festas & Eventos</h2>
+
+    <label>Pacote:</label>
+    <br>
+
+    <select id="pacoteEvento">
+      <option value="50">Standard</option>
+      <option value="80">Premium</option>
+      <option value="120">Infinity Deluxe</option>
+    </select>
+
+    <br>
+
+    <label>Quantidade de Pessoas:</label>
+    <br>
+
+    <input type="number" id="quantidadePessoas">
+
+    <br>
+
+    <button id="btnOrcamento">Calcular Orçamento</button>
+
+    <div id="resultadoEvento" class="resultado"></div>
+  </section>
+
+
+  <!-- EXERCÍCIO 07 -->
+  <section>
+    <h2>Exercício 07 - Validador de Segurança Infinity</h2>
+
+    <input type="text" id="numeroCartao" maxlength="19" placeholder="Digite o número do cartão">
+
+    <br>
+
+    <button id="btnCartao">Analisar Cartão</button>
+
+    <div id="resultadoCartao" class="resultado"></div>
+  </section>
+
+
+  <script>
+
+    // =========================================
+    // EXERCÍCIO 01 - VALIDAR CPF
+    // =========================================
+
+    function validarCPF(cpf){
+
+      cpf = cpf.replace(/\D/g, '');
+
+      if(cpf.length !== 11){
+        return false;
+      }
+
+      if(/^(\d)\1+$/.test(cpf)){
+        return false;
+      }
+
+      // PRIMEIRO DÍGITO
+      let soma = 0;
+
+      for(let i = 0; i < 9; i++){
+        soma += Number(cpf[i]) * (10 - i);
+      }
+
+      let digito1 = (soma * 10) % 11;
+
+      if(digito1 === 10){
+        digito1 = 0;
+      }
+
+      // SEGUNDO DÍGITO
+      soma = 0;
+
+      for(let i = 0; i < 10; i++){
+        soma += Number(cpf[i]) * (11 - i);
+      }
+
+      let digito2 = (soma * 10) % 11;
+
+      if(digito2 === 10){
+        digito2 = 0;
+      }
+
+      return digito1 == cpf[9] && digito2 == cpf[10];
+    }
+
+    document.getElementById('btnCpf').addEventListener('click', () => {
+
+      const cpf = document.getElementById('cpf').value;
+
+      const resultado = document.getElementById('resultadoCpf');
+
+      if(validarCPF(cpf)){
+        resultado.innerHTML = 'CPF Válido';
+        resultado.className = 'resultado verde';
+      } else {
+        resultado.innerHTML = 'CPF Inválido';
+        resultado.className = 'resultado vermelho';
+      }
+
+    });
+
+
+    // =========================================
+    // EXERCÍCIO 02 - CONVERSOR TEMPERATURA
+    // =========================================
+
+    const celsius = document.getElementById('celsius');
+    const fahrenheit = document.getElementById('fahrenheit');
+
+    celsius.addEventListener('input', () => {
+
+      let c = Number(celsius.value);
+
+      let f = (c * 9/5) + 32;
+
+      fahrenheit.value = f.toFixed(2);
+
+    });
+
+    fahrenheit.addEventListener('input', () => {
+
+      let f = Number(fahrenheit.value);
+
+      let c = (f - 32) * 5/9;
+
+      celsius.value = c.toFixed(2);
+
+    });
+
+
+    // =========================================
+    // EXERCÍCIO 03 - MÉDIA ESCOLAR
+    // =========================================
+
+    document.getElementById('btnMedia').addEventListener('click', () => {
+
+      const nome = document.getElementById('nome').value;
+
+      const nota1 = Number(document.getElementById('nota1').value);
+      const nota2 = Number(document.getElementById('nota2').value);
+      const nota3 = Number(document.getElementById('nota3').value);
+
+      const media = (nota1 + nota2 + nota3) / 3;
+
+      const resultado = document.getElementById('resultadoMedia');
+
+      if(media >= 7){
+
+        resultado.innerHTML = `
+          Aluno: ${nome} <br>
+          Média: ${media.toFixed(2)} <br>
+          Situação: APROVADO
+        `;
+
+        resultado.className = 'resultado azul';
+
+      } else if(media >= 4){
+
+        let falta = (10 - media).toFixed(2);
+
+        resultado.innerHTML = `
+          Aluno: ${nome} <br>
+          Média: ${media.toFixed(2)} <br>
+          Situação: EXAME <br>
+          Faltam ${falta} pontos para chegar em 10
+        `;
+
+        resultado.className = 'resultado verde';
+
+      } else {
+
+        resultado.innerHTML = `
+          Aluno: ${nome} <br>
+          Média: ${media.toFixed(2)} <br>
+          Situação: REPROVADO
+        `;
+
+        resultado.className = 'resultado vermelho';
+      }
+
+    });
+
+
+    // =========================================
+    // EXERCÍCIO 04 - INFINITY BANK
+    // =========================================
+
+    document.getElementById('btnTaxa').addEventListener('click', () => {
+
+      const bandeira = document.getElementById('bandeira').value;
+
+      const valorVenda = Number(document.getElementById('valorVenda').value);
+
+      const parcelas = Number(document.getElementById('parcelas').value);
+
+      let taxaBandeira = 0;
+
+      switch(bandeira){
+
+        case 'visa':
+          taxaBandeira = valorVenda * 0.02;
+          break;
+
+        case 'master':
+          taxaBandeira = valorVenda * 0.0185;
+          break;
+
+        case 'elo':
+          taxaBandeira = valorVenda * 0.03;
+          break;
+      }
+
+      const juros = valorVenda * (0.0035 * parcelas);
+
+      const taxaMensal = 12.50 * parcelas;
+
+      const valorTotal = valorVenda + taxaBandeira + juros + taxaMensal;
+
+      const valorParcela = valorTotal / parcelas;
+
+      document.getElementById('resultadoTaxa').innerHTML = `
+        Taxa da Bandeira: R$ ${taxaBandeira.toFixed(2)} <br>
+        Juros: R$ ${juros.toFixed(2)} <br>
+        Taxa Mensal: R$ ${taxaMensal.toFixed(2)} <br>
+        Valor Total: R$ ${valorTotal.toFixed(2)} <br>
+        Valor por Parcela: R$ ${valorParcela.toFixed(2)}
+      `;
+
+    });
+
+
+
+    // =========================================
+    // EXERCÍCIO 05 - LISTA VIP
+    // =========================================
+
+    const convidados = [];
+
+    const listaConvidados = document.getElementById('listaConvidados');
+
+    document.getElementById('btnAdicionarConvidado').addEventListener('click', () => {
+
+      const input = document.getElementById('nomeConvidado');
+
+      const nome = input.value.trim();
+
+      if(nome === ''){
+        alert('Digite um nome válido');
+        return;
+      }
+
+      convidados.push(nome);
+
+      renderizarLista();
+
+      input.value = '';
+    });
+
+    function renderizarLista(){
+
+      listaConvidados.innerHTML = '';
+
+      convidados.forEach((convidado, index) => {
+
+        const li = document.createElement('li');
+
+        const span = document.createElement('span');
+
+        span.textContent = convidado;
+
+        li.appendChild(span);
+
+        const divAcoes = document.createElement('div');
+
+        divAcoes.classList.add('acoes');
+
+        // BOTÃO CONCLUIR
+        const btnConcluir = document.createElement('button');
+
+        btnConcluir.textContent = 'Concluir';
+
+        btnConcluir.addEventListener('click', () => {
+          span.classList.toggle('riscado');
+        });
+
+        // BOTÃO EDITAR
+        const btnEditar = document.createElement('button');
+
+        btnEditar.textContent = 'Editar';
+
+        btnEditar.addEventListener('click', () => {
+
+          const novoNome = prompt('Editar nome:', convidado);
+
+          if(novoNome && novoNome.trim() !== ''){
+
+            convidados[index] = novoNome.trim();
+
+            renderizarLista();
+          }
+
+        });
+
+        // BOTÃO EXCLUIR
+        const btnExcluir = document.createElement('button');
+
+        btnExcluir.textContent = 'Excluir';
+
+        btnExcluir.addEventListener('click', () => {
+
+          convidados.splice(index, 1);
+
+          renderizarLista();
+        });
+
+        divAcoes.appendChild(btnConcluir);
+        divAcoes.appendChild(btnEditar);
+        divAcoes.appendChild(btnExcluir);
+
+        li.appendChild(divAcoes);
+
+        listaConvidados.appendChild(li);
+
+      });
+
+    }
+
+
+
+    // =========================================
+    // EXERCÍCIO 06 - CRÉDITO EVENTOS
+    // =========================================
+
+    document.getElementById('btnOrcamento').addEventListener('click', () => {
+
+      const valorPacote = Number(document.getElementById('pacoteEvento').value);
+
+      const quantidade = Number(document.getElementById('quantidadePessoas').value);
+
+      const custoBruto = valorPacote * quantidade;
+
+      const taxaServico = custoBruto * 0.10;
+
+      let total = custoBruto + taxaServico;
+
+      let desconto = 0;
+
+      if(quantidade > 100){
+
+        desconto = total * 0.05;
+
+        total -= desconto;
+      }
+
+      document.getElementById('resultadoEvento').innerHTML = `
+        Custo Bruto: R$ ${custoBruto.toFixed(2)} <br>
+        Taxa de Serviço: R$ ${taxaServico.toFixed(2)} <br>
+        Desconto: R$ ${desconto.toFixed(2)} <br>
+        Total Final: R$ ${total.toFixed(2)}
+      `;
+
+    });
+
+
+
+    // =========================================
+    // EXERCÍCIO 07 - VALIDADOR CARTÃO
+    // =========================================
+
+    function validarLuhn(numero){
+
+      let soma = 0;
+
+      let alternar = false;
+
+      for(let i = numero.length - 1; i >= 0; i--){
+
+        let n = parseInt(numero[i]);
+
+        if(alternar){
+
+          n *= 2;
+
+          if(n > 9){
+            n -= 9;
+          }
+        }
+
+        soma += n;
+
+        alternar = !alternar;
+      }
+
+      return soma % 10 === 0;
+    }
+
+
+    function detectarBandeira(numero){
+
+      if(numero.startsWith('4')){
+        return 'Visa';
+      }
+
+      if(/^5[1-5]/.test(numero)){
+        return 'MasterCard';
+      }
+
+      if(/^3[47]/.test(numero)){
+        return 'American Express';
+      }
+
+      if(/^6/.test(numero)){
+        return 'Discover';
+      }
+
+      return 'Desconhecida';
+    }
+
+
+    function detectarSetor(numero){
+
+      const primeiroDigito = numero[0];
+
+      switch(primeiroDigito){
+
+        case '1':
+        case '2':
+          return 'Companhias Aéreas';
+
+        case '3':
+          return 'Viagens e Entretenimento';
+
+        case '4':
+        case '5':
+          return 'Bancário e Financeiro';
+
+        case '6':
+          return 'Comércio e Bancos';
+
+        default:
+          return 'Outros';
+      }
+    }
+
+
+    function detectarBanco(numero){
+
+      const inicio = numero.substring(0, 4);
+
+      switch(inicio){
+
+        case '4011':
+          return 'Infinity Bank';
+
+        case '5100':
+          return 'Master Finance';
+
+        case '3714':
+          return 'American Finance';
+
+        default:
+          return 'Banco Não Identificado';
+      }
+    }
+
+
+    document.getElementById('btnCartao').addEventListener('click', () => {
+
+      let numero = document.getElementById('numeroCartao').value;
+
+      numero = numero.replace(/\D/g, '');
+
+      const resultado = document.getElementById('resultadoCartao');
+
+      if(numero.length < 13 || numero.length > 16){
+
+        resultado.innerHTML = 'Cartão inválido: quantidade de dígitos incorreta';
+
+        resultado.className = 'resultado vermelho';
+
+        return;
+      }
+
+      const valido = validarLuhn(numero);
+
+      const bandeira = detectarBandeira(numero);
+
+      const setor = detectarSetor(numero);
+
+      const banco = detectarBanco(numero);
+
+      resultado.innerHTML = `
+        Status: ${valido ? 'VÁLIDO' : 'INVÁLIDO'} <br>
+        Bandeira: ${bandeira} <br>
+        Categoria de Setor: ${setor} <br>
+        Banco Emissor: ${banco}
+      `;
+
+      resultado.className = valido
+        ? 'resultado verde'
+        : 'resultado vermelho';
+
+    });
+
+  </script>
+
+</body>
+</html>
